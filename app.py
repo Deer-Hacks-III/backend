@@ -96,3 +96,7 @@ def callback():
     token = oauth.auth0.authorize_access_token()
     session["user"] = token
     return redirect("/")
+
+if __name__ == "__main__":
+    app.run(debug=True)
+
