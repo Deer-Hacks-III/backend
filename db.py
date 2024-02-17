@@ -6,6 +6,14 @@ client = pymongo.MongoClient(CONNECTION_STRING, server_api=pymongo.server_api.Se
 db = client.get_database('flask_mongodb_atlas')
 user_collection = pymongo.collection.Collection(db, 'user_collection')
 
+@app.route("/upc/", methods=["POST"])
+def add_upc():
+    pass
+
+@app.route("/upc/", methods=["GET"])
+def get_upc():
+    pass
+
 try:
     client.admin.command('ping')
     print("Pinged your deployment. You successfully connected to MongoDB!")
