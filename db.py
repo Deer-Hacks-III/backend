@@ -15,12 +15,12 @@ def add_upc(upc):
     if not get_upc(upc):
         list.insert_one({'upc': upc})
     else: # upc already in the database
-        pass
+        print("adding not success")
 
 
 # @app.route("/upc/", methods=["GET"])
 def get_upc(upc):
-    result = list.find_one()
+    result = list.find_one({'upc': upc})
 
     if not result:
         # return Flask.jsonify({'upc_exists': False}), 404
@@ -29,13 +29,19 @@ def get_upc(upc):
         # return Flask.jsonify({'msg': True}), 200
         return True
 
-
 def delete_upc(upc):
     if get_upc(upc):
         list.delete_one({'upc': upc})
+        print("deleted")
+    else:
+        print("not deleted")
+
+def get_all_upc():
+    return [x for x in list.find({}, {"_id": 0, "upc": 1})] # maybe add id too?
 
 try:
     client.admin.command('ping')
     print("Pinged your deployment. You successfully connected to MongoDB!")
+    print(get_all_upc())
 except Exception as e:
     print(e)
