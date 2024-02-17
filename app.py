@@ -7,6 +7,8 @@ import pymongo
 
 app = Flask(__name__)
 
+list = pymongo.collection.Collection(db, 'list')
+
 require_auth = ResourceProtector()
 validator = Auth0JWTBearerTokenValidator(
     "127.0.0.1:5000",
@@ -46,16 +48,13 @@ def private_scoped():
     )
     return jsonify(message=response)
 
-list = pymongo.collection.Collection(db, 'list')
-
 @app.route("/")
 def home():
     return "hi"
 
 @app.route("/list/", methods=["POST"])
-def add_upc(upc):
-    # json.loads(request.data)
-    if not get_upc(upc):
+def add_upc(upc: int):
+    if not list.find_one({'upc': upc}):
         list.insert_one({'upc': upc})
         return jsonify({'upc_added': True}), 200
     else: # upc already in the database
@@ -75,7 +74,7 @@ def get_upc(upc: int):
 
 @app.route('/list/<int:upc>', methods=['DELETE'])
 def delete_upc(upc: int):
-    if get_upc(upc):
+    if list.find_one({'upc': upc}):
         list.delete_one({'upc': upc})
         return jsonify({'upc_deleted': True}), 200
     else:
