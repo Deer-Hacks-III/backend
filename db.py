@@ -1,8 +1,8 @@
 from flask import Flask
 import pymongo
 from app import app
-CONNECTION_STRING = "mongodb+srv://demouser:<1HqeX4d6BuZtrajq>@workshop.buro7dq.mongodb.net/?retryWrites=true&w=majority"
-client = pymongo.MongoClient(CONNECTION_STRING)
+CONNECTION_STRING = "mongodb+srv://mainuser:demopassword@workshop.buro7dq.mongodb.net/?retryWrites=true&w=majority"
+client = pymongo.MongoClient(CONNECTION_STRING, server_api=pymongo.server_api.ServerApi('1'))
 db = client.get_database('flask_mongodb_atlas')
 user_collection = pymongo.collection.Collection(db, 'user_collection')
 
