@@ -1,10 +1,8 @@
 from authlib.integrations.flask_client import OAuth
 from flask import Flask
 from os import environ as env
-from pymongo import MongoClient
 
 app = Flask(__name__)
-
 
 oauth = OAuth(app)
 oauth.register(
@@ -20,3 +18,6 @@ oauth.register(
 @app.route("/")
 def home():
     return "hi"
+
+if __name__ == '__main__':
+	app.run(debug=True)
