@@ -1,3 +1,4 @@
+from authlib.integrations.flask_client import OAuth
 from flask import Flask
 from pymongo import MongoClient
 
@@ -7,3 +8,4 @@ client = MongoClient('localhost', 27017)
 
 db = client.flask_db
 
+oauth = OAuth(app)
