@@ -1,4 +1,5 @@
 from authlib.integrations.flask_oauth2 import ResourceProtector
+from authlib.integrations.flask_client import OAuth
 from flask import Flask, url_for, session, redirect
 from flask import jsonify
 from db import db
@@ -6,15 +7,18 @@ from validator import Auth0JWTBearerTokenValidator
 import pymongo
 
 app = Flask(__name__)
+oauth = OAuth(app)
 
 list = pymongo.collection.Collection(db, 'list')
 
 require_auth = ResourceProtector()
+
 validator = Auth0JWTBearerTokenValidator(
-    "127.0.0.1:5000",
+    "dev-mzldvbqnuyiy4310.us.auth0.com",
     "https://bargain/api"
 )
 require_auth.register_token_validator(validator)
+
 
 @app.route("/api/public")
 def public():
@@ -83,7 +87,7 @@ def delete_upc(upc: int):
 @app.route('/list/', methods=['GET'])
 def get_all_upcs():
     return jsonify([x for x in list.find({}, {"_id": 0, "upc": 1})]) # maybe add id too?
-
+"""
 @app.route("/login")
 def login():
     return oauth.auth0.authorize_redirect(
@@ -95,7 +99,7 @@ def callback():
     token = oauth.auth0.authorize_access_token()
     session["user"] = token
     return redirect("/")
-
+"""
 if __name__ == "__main__":
     app.run(debug=True)
 
