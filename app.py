@@ -64,8 +64,8 @@ def private_scoped():
 def home():
     return "hi"
 
-@app.route("/list/<int:upc>", methods=["POST"])
-def add_upc(upc: int):
+@app.route("/list/<string:upc>", methods=["POST"])
+def add_upc(upc: str):
     if not list.find_one({'upc': upc}):
         list.insert_one({'upc': upc})
         return jsonify({'upc_added': True}), 200
