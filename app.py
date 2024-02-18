@@ -65,8 +65,8 @@ def add_upc(upc: int):
         return jsonify({'upc_added': False}), 400
 
 
-@app.route("/list/<int:upc>", methods=["GET"])
-def get_upc(upc: int):
+@app.route("/list/<string:upc>", methods=["GET"])
+def get_upc(upc: str):
     result = list.find_one({'upc': upc})
 
     if result:
@@ -76,8 +76,8 @@ def get_upc(upc: int):
         return jsonify({'upc_exists': False}), 404
         # return True
 
-@app.route('/list/<int:upc>', methods=['DELETE'])
-def delete_upc(upc: int):
+@app.route('/list/<string:upc>', methods=['DELETE'])
+def delete_upc(upc: str):
     if list.find_one({'upc': upc}):
         list.delete_one({'upc': upc})
         return jsonify({'upc_deleted': True}), 200
@@ -101,5 +101,5 @@ def callback():
     return redirect("/")
 """
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=8324)
 
