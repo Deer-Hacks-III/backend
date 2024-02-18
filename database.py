@@ -1,14 +1,18 @@
 import requests
-API_URL = "127.0.0.1:8324"
+API_URL = "http://172.17.195.155:5000"
 
 
 class Database:
 
     def get_upc(self, upc: str):
         data = {'upc': upc}
-        r = requests.get(f'{API_URL}/list', json=data)
+        r = requests.get(f'{API_URL}/list/{upc}')
         return r.json()
 
+    def add_upc(self, upc: str):
+        r = requests.post(f'{API_URL}/list/{upc}')
+        return r.json()
+    
 
 if __name__ == "__main__":
     base = Database()
