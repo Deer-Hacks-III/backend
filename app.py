@@ -1,7 +1,6 @@
 from authlib.integrations.flask_oauth2 import ResourceProtector
 from authlib.integrations.flask_client import OAuth
-from flask import Flask, url_for, session, redirect
-from flask import jsonify
+from flask import Flask, session, redirect, jsonify
 from db import db
 from validator import Auth0JWTBearerTokenValidator
 import pymongo
@@ -65,7 +64,7 @@ def private_scoped():
 def home():
     return "hi"
 
-@app.route("/list/", methods=["POST"])
+@app.route("/list/<int:upc>", methods=["POST"])
 def add_upc(upc: int):
     if not list.find_one({'upc': upc}):
         list.insert_one({'upc': upc})
@@ -93,7 +92,7 @@ def delete_upc(upc: str):
     else:
         return jsonify({'upc_deleted': False}), 400
 
-@app.route('/list/', methods=['GET'])
+@app.route('/list', methods=['GET'])
 def get_all_upcs():
     return jsonify([x for x in list.find({}, {"_id": 0, "upc": 1})]) # maybe add id too?
 
@@ -110,5 +109,5 @@ def callback():
     return redirect("/")
 
 if __name__ == "__main__":
-    app.run(debug=True, port=8324)
+    app.run(debug=False)
 

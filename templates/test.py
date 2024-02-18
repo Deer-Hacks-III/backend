@@ -4,7 +4,7 @@ conn = http.client.HTTPConnection("127.0.0.1:5000")
 
 headers = { 'authorization': "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjVHTUpKR1JLdk9GR0hudjBTNnBqTSJ9.eyJpc3MiOiJodHRwczovL2Rldi1temxkdmJxbnV5aXk0MzEwLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJRU0tMY3k4djBqclFYWHBUcUdpTGVUb29LaGpUU0hpZEBjbGllbnRzIiwiYXVkIjoiaHR0cHM6Ly9iYXJnYWluL2FwaSIsImlhdCI6MTcwODIxMTcyNiwiZXhwIjoxNzA4Mjk4MTI2LCJhenAiOiJRU0tMY3k4djBqclFYWHBUcUdpTGVUb29LaGpUU0hpZCIsImd0eSI6ImNsaWVudC1jcmVkZW50aWFscyJ9.U4bjk1HnrSPluNPKe6UtYQPuuKY5wxHTWDo3nhLfxOZAZ-QDfn6hjklouQ8hWYGOyXfcqij86Do1Y1t5sNiY5CRu4jyeyqoM0HJ5dDPIblrWDgAyPF40IKkHnhNmcUo4HOvlSayRXj0AddWC_d7rfWM81D-F35V5xakFR371bA7aujHpkDY0ThWdtjZ3YPNEwIVbn_2eccf2TLjAgXgbNujUTta4YHM0HKabAuT6IC58k0XiaAn6P_L4T9ipdwNSSI2bG8lUO1mpQi-UtBiDmqWXsgnSdk7Vd5ct8sZtzQFa-T3ZtZOOGVAToazLRIqf23F6JS7iZJ3-hwZJonQf4Q" }
 
-conn.request("POST", "/list", headers=headers)
+conn.request("GET", "/list", headers=headers)
 
 res = conn.getresponse()
 data = res.read()
