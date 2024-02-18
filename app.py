@@ -8,6 +8,15 @@ import pymongo
 
 app = Flask(__name__)
 oauth = OAuth(app)
+oauth.register(
+    'auth0',
+    client_id='QSKLcy8v0jrQXXpTqGiLeTooKhjTSHid',
+    client_secret='u1G5K9P6-Ugrlq4H6FZibNWVoH6mAJNnUVik1p-Yq746slm1TEezSdNNJFtZcquM',
+    api_base_url='https://dev-mzldvbqnuyiy4310.us.auth0.com',
+    access_token_url='https://dev-mzldvbqnuyiy4310.us.auth0.com/oauth/token',
+    authorize_url='https://dev-mzldvbqnuyiy4310.us.auth0.com/authorize',
+    client_kwargs={'scope': 'openid profile email'},
+)
 
 list = pymongo.collection.Collection(db, 'list')
 
@@ -87,19 +96,19 @@ def delete_upc(upc: str):
 @app.route('/list/', methods=['GET'])
 def get_all_upcs():
     return jsonify([x for x in list.find({}, {"_id": 0, "upc": 1})]) # maybe add id too?
-"""
+
 @app.route("/login")
 def login():
     return oauth.auth0.authorize_redirect(
-        redirect_uri=url_for("callback", _external=True)
+        redirect_uri='http://localhost:5000/callback'
     )
 
-@app.route("/callback", methods=["GET", "POST"])
+@app.route("/callback")
 def callback():
     token = oauth.auth0.authorize_access_token()
-    session["user"] = token
+    session["user"] = token.json()
     return redirect("/")
-"""
+
 if __name__ == "__main__":
     app.run(debug=True, port=8324)
 
